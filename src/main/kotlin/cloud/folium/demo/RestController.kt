@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.concurrent.CompletableFuture
 
 @RestController
-class RestController {
+class CovidRestController {
 
 	@Autowired
 	lateinit var covidService: CovidService

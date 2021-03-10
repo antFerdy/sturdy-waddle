@@ -25,12 +25,8 @@ data class CovidData(
 	)
 
 	data class CountryData(
-
-        @JsonProperty("Country")
-		var Country: String,
-
-        @JsonProperty("Date")
-		var Date: Date,
+		@JsonProperty("country")
+		var country: String,
 
         @JsonProperty("NewConfirmed")
 		var newConfirmed: Int,
