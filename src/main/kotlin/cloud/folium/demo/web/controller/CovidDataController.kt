@@ -9,7 +9,6 @@ import java.util.concurrent.CompletableFuture
 @RestController
 class CovidDataController(private val covidDataService: CovidDataService) {
 
-
     @GetMapping("/covid-statistics/stat-by-countries")
     fun getStatByCountries(): CompletableFuture<CovidData> = covidDataService.loadCovidData()
 }

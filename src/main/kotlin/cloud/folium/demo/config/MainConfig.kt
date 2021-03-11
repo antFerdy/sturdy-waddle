@@ -24,6 +24,7 @@ class MainConfig {
 			.setConnectTimeout(1_000)
 			.setRequestTimeout(3_000)
 			.setReadTimeout(2_000)
+
 		return Dsl.asyncHttpClient(builder)
 	}
 
