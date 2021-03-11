@@ -6,20 +6,20 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import org.asynchttpclient.AsyncHttpClient
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.scheduling.annotation.Async
 import java.util.concurrent.CompletableFuture
 
-class CovidDataService(private val client: AsyncHttpClient, private val objectMapper: ObjectMapper) : ICovidDataService {
-
-    @Value("\${covidApi.uri}")
-    lateinit var covidApiUri: String
+class CovidDataService(
+    private val client: AsyncHttpClient,
+    private val objectMapper: ObjectMapper,
+    private val covidApiUri: String) : ICovidDataService {
 
     private val logger: Logger = LoggerFactory.getLogger(this::class.java)
 
     @Async
     override fun loadCovidData(): CompletableFuture<CovidData> {
         logger.debug("Covid api call on $covidApiUri")
+
         return client
             .prepareGet(covidApiUri)
             .execute()

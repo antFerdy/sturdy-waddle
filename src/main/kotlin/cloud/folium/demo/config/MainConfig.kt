@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.asynchttpclient.AsyncHttpClient
 import org.asynchttpclient.Dsl
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
@@ -12,6 +13,9 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 
 @Configuration
 class MainConfig {
+
+    @Value("\${covidApi.uri}")
+    lateinit var covidApiUri: String
 
 	@Bean
 	fun asyncClient(): AsyncHttpClient {
@@ -24,7 +28,8 @@ class MainConfig {
 	}
 
 	@Bean
-	fun covidDataService(): CovidDataService = CovidDataService(asyncClient(), objectMapper())
+	fun objectMapper(): ObjectMapper = ObjectMapper()
+		.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
 	@Bean("taskExecutor")
 	fun taskExecutor(): ThreadPoolTaskExecutor = ThreadPoolTaskExecutor().apply {
@@ -36,7 +41,5 @@ class MainConfig {
 	}
 
 	@Bean
-	fun objectMapper(): ObjectMapper = ObjectMapper()
-		.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-
+	fun covidDataService(): CovidDataService = CovidDataService(asyncClient(), objectMapper(), covidApiUri)
 }
