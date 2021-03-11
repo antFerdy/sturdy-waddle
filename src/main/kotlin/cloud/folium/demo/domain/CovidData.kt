@@ -1,7 +1,6 @@
-package cloud.folium.demo
+package cloud.folium.demo.domain
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import java.util.*
 
 data class CovidData(
 
@@ -25,7 +24,7 @@ data class CovidData(
 	)
 
 	data class CountryData(
-		@JsonProperty("country")
+		@JsonProperty("Country")
 		var country: String,
 
         @JsonProperty("NewConfirmed")
