@@ -24,6 +24,7 @@ data class CovidData(
 	)
 
 	data class CountryData(
+
 		@JsonProperty("Country")
 		var country: String,
 
@@ -35,6 +36,5 @@ data class CovidData(
 
         @JsonProperty("NewRecovered")
 		var newRecovered: Int,
-
-        )
+	)
 }
