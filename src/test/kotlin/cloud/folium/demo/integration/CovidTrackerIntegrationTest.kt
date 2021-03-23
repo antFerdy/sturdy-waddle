@@ -28,10 +28,8 @@ class CovidTrackerIntegrationTest : CovidTrackerIntegrationTestBase({
             logger.debug("Health check on $healthCheckEndpoint")
             Thread.sleep(10_000) //looks like java process doesn't start immediately after container starts
 
-            val client = HttpClients.createDefault()
             val getRequest = HttpGet(healthCheckEndpoint)
             val response = client.execute(getRequest)
-
 
             it("returns ok status") {
                 response.statusLine.statusCode shouldBe 200
@@ -50,7 +48,6 @@ class CovidTrackerIntegrationTest : CovidTrackerIntegrationTestBase({
                     HttpResponse.response().withStatusCode(200).withBody(dummyJson)
                 )
 
-            val client = HttpClients.createDefault()
             val endpoint = "${covidTrackerContainerInfo.endpoint}/covid-statistics/stat-by-countries"
             logger.debug("Test request on $endpoint")
 

@@ -11,8 +11,15 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.testcontainers.containers.MockServerContainer
 import org.testcontainers.containers.Network
+import org.testcontainers.shaded.org.apache.http.client.HttpClient
+import org.testcontainers.shaded.org.apache.http.impl.client.HttpClientBuilder
+import org.testcontainers.shaded.org.apache.http.impl.client.HttpClients
 import java.io.File
 import java.nio.file.Paths
+import org.testcontainers.shaded.org.apache.http.client.config.RequestConfig
+
+
+
 
 open class CovidTrackerIntegrationTestBase(spec: Spec.() -> Unit) : Spek(spec) {
 
@@ -23,6 +30,16 @@ open class CovidTrackerIntegrationTestBase(spec: Spec.() -> Unit) : Spek(spec) {
         private val mockServerContainerInfo: MockServerContainerInfo = startMockServerContainer()
         val mockServerClient: MockServerClient = mockServerContainerInfo.mockServerClient
         val covidTrackerContainerInfo: CovidTrackerContainerInfo = startCovidTrackerContainer()
+        val client: HttpClient = initHttpClient()
+
+        private fun initHttpClient(): HttpClient {
+            val config = RequestConfig.custom()
+                .setConnectTimeout(20_000)
+                .setConnectionRequestTimeout(20_000)
+                .setSocketTimeout(20_000)
+                .build()
+            return HttpClientBuilder.create().setDefaultRequestConfig(config).build()
+        }
 
         private fun startMockServerContainer(): MockServerContainerInfo {
 
