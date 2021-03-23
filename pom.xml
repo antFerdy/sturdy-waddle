@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>cloud.folium</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>covid-tracker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
+	<name>covid-tracker</name>
 	<description>Demo for onboarding</description>
 	<properties>
 		<java.version>1.8</java.version>
@@ -26,11 +26,23 @@
 		<coroutines.version>1.4.2</coroutines.version>
 		<kotlin.test.version>2.0.7</kotlin.test.version>
 		<kotlin.test.assertions.version>3.4.0</kotlin.test.assertions.version>
+		<mockserver.client.version>4.1.0</mockserver.client.version>
+		<apache.httpclient.version>4.5.13</apache.httpclient.version>
 	</properties>
+	<repositories>
+		<repository>
+			<id>jcenter</id>
+			<url>https://jcenter.bintray.com/</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.module</groupId>
@@ -95,11 +107,13 @@
 			<groupId>org.jetbrains.spek</groupId>
 			<artifactId>spek-api</artifactId>
 			<version>${spek.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jetbrains.spek</groupId>
 			<artifactId>spek-junit-platform-engine</artifactId>
 			<version>${spek.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.kotlintest</groupId>
@@ -111,7 +125,27 @@
 			<artifactId>kotlintest-assertions-json</artifactId>
 			<version>${kotlin.test.assertions.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>mockserver</artifactId>
+			<version>${testcontainers.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers</artifactId>
+			<version>${testcontainers.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mock-server</groupId>
+			<artifactId>mockserver-client-java</artifactId>
+			<version>${mockserver.client.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mock-server</groupId>
+			<artifactId>mockserver-netty</artifactId>
+			<version>${mockserver.client.version}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -153,6 +187,7 @@
 				</dependencies>
 			</plugin>
 		</plugins>
+		<finalName>${project.artifactId}</finalName>
 	</build>
 
 </project>
